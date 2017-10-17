@@ -5,6 +5,8 @@
     </div>
 </div>
 {{/if}}
+
+
 <header class="header" role="banner">
     <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
         <span class="mobileMenu-toggleIcon">Toggle menu</span>
@@ -22,7 +24,117 @@
     {{/if}}
     {{{region name="header_bottom"}}}
     <div class="navPages-container" id="menu" data-menu>
-        {{> components/common/navigation-menu}}
+        {{> components/common/navigation-menu0}}
     </div>
 
+    <!-- Custom Edit -->
+    <div class="container vehicleSearchContainer">
+      <div>
+        <h2>Search By Vehicle</h2>
+      </div>
+      {{#each categories}}
+        {{#if name '===' 'CarSearch'}}
+          {{#if children}}
+          <h2>MAKE</h2>
+          <div>
+            <select id="first">
+              <option>
+                SELECT MAKE
+              </option>
+              {{#each children}}
+                {{#if children}}
+
+                  <option class="{{name}}" value="{{name}}">{{name}}</option>.
+                {{/if}}
+              {{/each}}
+            </select>
+          </div>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+      {{#each categories}}
+        {{#if name '===' 'CarSearch'}}
+          {{#if children}}
+          <h2>Model</h2>
+          <div>
+            <select id="second">
+              <option>
+                SELECT A MODEL
+              </option>
+              {{#each children}}
+                {{#if children}}
+
+                  {{#each children}}
+
+                    <option style ="display:none;" class="{{../name}} class1" value="{{name}}">{{name}}</option>
+                  {{/each}}
+                {{/if}}
+              {{/each}}
+            </select>
+          </div>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+      {{#each categories}}
+        {{#if name '===' 'CarSearch'}}
+          {{#if children}}
+          <h2>Year</h2>
+          <div>
+            <select id="third">
+              <option>
+                SELECT A YEAR
+              </option>
+              {{#each children}}
+                {{#if children}}
+                  {{#each children}}
+                    {{#if children}}
+
+                      {{#each children}}
+
+                        <option class="{{../name}} class2" value="{{name}}">{{name}}</option>
+                      {{/each}}
+                    {{/if}}
+                  {{/each}}
+                {{/if}}
+              {{/each}}
+            </select>
+          </div>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+      <a class="vehicleSearch button"href="/">Search</a>
+    </div>
+    <!-- <div class="container vehicleSearchContainer">
+      <div>
+        <h2>Search By Vehicle</h2>
+      </div>
+      <div class="mmySelection">
+        <h2>MAKE</h2>
+        <div>
+          <select>
+            <option value="Honda">Honda</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Hyundai">Hyundai</option>
+          </select>
+        </div>
+        <h2>MODEL</h2>
+        <div>
+          <select>
+            <option value="Accord">Accord</option>
+            <option value="Civic">Civic</option>
+            <option value="Fit">Fit</option>
+          </select>
+        </div>
+        <h2>MAKE</h2>
+        <div>
+          <select>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+          </select>
+        </div>
+      </div>
+
+    </div> -->
+    <!-- End of Custom Edit -->
 </header>
