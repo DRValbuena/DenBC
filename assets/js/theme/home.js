@@ -2,6 +2,8 @@ import $ from 'jquery';
 import PageManager from './page-manager';
 
 export default class Home extends PageManager {
+
+  // custom code for ACP YMM
   loaded(next) {
     $(".class1").hide();
     $(".class2").hide();
@@ -24,4 +26,5 @@ export default class Home extends PageManager {
       $(".vehicleSearch").attr('href',"/"+$("#first").val()+"/"+$("#second").val()+"/"+$("#third").val());
     });
   }
+  // end of custom code for ACP YMM
 }
