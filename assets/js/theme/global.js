@@ -44,5 +44,44 @@ export default class Global extends PageManager {
         loadingProgressBar();
         sweetAlert();
         next();
+
+
+          // custom code for ACP YMM
+
+            $(".class1").hide();
+            $(".class2").hide();
+            $("." + $("#first").val()).show();
+
+            $("#first").change(function() {
+              $(".class1").hide();
+              $("." + this.value).show();
+              $("#second option:first-child").prop("selected", true);
+              $("#third option:first-child").prop("selected", true);
+            });
+
+            $("#second").change(function() {
+              $(".class2").hide();
+              $("." + this.value).show();
+              $("#third option:first-child").prop("selected", true);
+              $(".vehicleSearch").attr('href',"/"+this.value+"/"+$("#third").val());
+            });
+            $("#third").change(function() {
+              $(".vehicleSearch").attr('href',"/"+$("#first").val()+"/"+$("#second").val()+"/"+$("#third").val());
+            });
+
+          // end of custom code for ACP YMM
+
+          // Begin Custom code for split swatch
+
+          $("div[data-product-attribute=swatch]:first label" ).on('click',function(){
+            console.log($(this).attr('data-product-attribute-value'));
+            $("label[for=attribute_102]").click();
+            $("input[value=102]").attr('checked',false);
+          });
+          $("div[data-product-attribute=swatch]:eq(1) label" ).on('click',function(){
+            var firstColorChecked=  $("div[data-product-attribute=swatch]:first input:checked").attr('value');
+            $("input[value="+ firstColorChecked +"]").attr('checked',false);
+          });
+          // Begin Custom code for split swatch
     }
 }
