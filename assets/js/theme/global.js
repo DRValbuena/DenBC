@@ -83,5 +83,84 @@ export default class Global extends PageManager {
             $("input[value="+ firstColorChecked +"]").attr('checked',false);
           });
           // Begin Custom code for split swatch
+
+          //begin Custom Code for Bulk Ordering
+          const productArray = new Array();
+          var sizeOptions = $("div[data-product-attribute=input-number]");
+          var sizeCode = $("div[data-product-attribute=set-rectangle] input");
+          var sizeUrlParameter = $("div[data-product-attribute=set-rectangle] input").attr('name');
+          var colorUrlParameter = $("div[data-product-attribute=swatch] input").attr('name');
+          var productId = $("form input[name=product_id]").attr('value');
+          console.log(productId);
+          //store products
+          // const productArray = new Array();
+          //
+          // console.log(colorOption);
+          // for(var i = 0; i<sizeOptions.length; i++){
+          //   const product = new Object();
+          //   product.size = $(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,'');
+          //   product.colorCode = $("div[data-product-attribute=swatch]:first input:checked").attr('value');
+          //   //console.log($(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,''));
+          //   product.sizeQty = $(sizeOptions[i]).find('input').val();
+          //   //console.log($(sizeOptions[i]).find('input').val());
+          //   productArray.push(product);
+          // }
+          // console.log(sizeCode);
+          // for(var i = 0; i<sizeCode.length; i++){
+          //   console.log($(sizeCode[i]).val());
+          // }
+          $("button[data-action=inc]").on("click",function(){
+
+            //console.log("increase button clicked");
+            //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
+            for(var i = 0; i<sizeOptions.length; i++){
+              const product = new Object();
+              product.size = $(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,'');
+              product.colorCode = $("div[data-product-attribute=swatch]:first input:checked").attr('value');
+              product.sizeCode = $(sizeCode[i]).val();
+              //console.log($(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,''));
+              product.sizeQty = $(sizeOptions[i]).find('input').val();
+              //console.log($(sizeOptions[i]).find('input').val());
+              productArray.push(product);
+            }
+            console.log(productArray);
+
+
+            loop_Ajax(0);
+            function loop_Ajax(i) {
+              if(i === productArray.length) {
+                console.log("end");
+                window.location.href="/cart.php?";
+                return;
+              }
+              var productContent = productArray[i];
+              var pid = productId;
+              var sizeQty = productContent.sizeQty;
+              var sizeCode = productContent.sizeCode;
+              var colorCode = productContent.colorCode;
+              var addToCartUrl = "/cart.php?action=add&qty=" + sizeQty + "&product_id=" + pid + "&" +sizeUrlParameter+"="+sizeCode+"&"+colorUrlParameter+"="+colorCode;
+              $.ajax({
+                type: 'GET',
+                url: addToCartUrl,
+                // beforeSend: function() {
+                //   $('#loadingDiv').show();
+                // },
+                success: function() {
+                  console.log(productId + "success");
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  console.log("Status: " + textStatus); console.log("Error: " + errorThrown);
+                },
+                complete: function(){
+                  i++;
+                  loop_Ajax(i++);
+                },
+              });
+            }
+
+          });
+
+          //end Custom Code for Bulk Ordering
+
     }
 }
