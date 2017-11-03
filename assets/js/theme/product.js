@@ -110,33 +110,6 @@ for(var i = 1; i<swatchList.length; i++){
   }
 }
 var bulkNum = 1;
-// var html ="";
-// //html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=BulkNum"+ (bulkNum + 1) +" data-product-option-change style>";
-// html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=bulkNum data-product-option-change style>";
-// html += "<div class='form-field' data-product-attribute='swatch'>";
-// html += "<label class='form-label form-label--alternate form-label--inlineSmall'>Color:<span data-option-value=''></span><small>Required</small></label>"
-// console.log("colorArray Length: " + colorArray.length);
-// for(var i=0; i<colorArray.length; i++) {
-//   if(colorArray[i].type === 'input'){
-//     html += "<input class='form-radio' type='radio' name="+ colorArray[i].inputName+"test value="+colorArray[i].inputValue +" id="+colorArray[i].inputId +"test required='' data-state='false'>"
-//
-//   }
-//   else if(colorArray[i].type === 'label'){
-//     html += "<label class='form-option form-option-swatch' for="+colorArray[i].labelFor +"bulk data-product-attribute-value="+colorArray[i].inputValue +">";
-//     html += colorArray[i].span;
-//     html += "</label>";
-//   }
-// }
-// html += "</div>";
-// for(var i=0; i<sizeOptions.length; i++) {
-//   html += sizeOptions[i].outerHTML;
-// }
-// for(var i=0; i<sizeSelect.length; i++) {
-//   html += sizeSelect[i].outerHTML;
-// }
-//
-// html += "</div></div>";
-//console.log("before addfunction: "+bulkNum);
 function generateContainer(bulkNum){
   var html ="";
   //html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=BulkNum"+ (bulkNum + 1) +" data-product-option-change style>";
@@ -165,64 +138,39 @@ function generateContainer(bulkNum){
 
   html += "</div></div>";
   return html;
-}
+}//end generateContainer function
+
 //create a new option container when Add New is clicked
 $(document).on("click","#addBulk", function(){
   var genHthml = generateContainer(bulkNum);
   $("#addBulkCont").before(genHthml);
   bulkNum++;
-  //$("#bulkNum").attr("id","bulkNum"+bulkNum)
-  //console.log($("#bulkNum").attr("id","bulkNum"+bulkNum));
-  //console.log("after addfunction: "+bulkNum);
 });
 //remove bulk
 $(document).on("click","#removeBulk",function(){
   $(this).parent().remove();
 });
 
-
-// sizeOptions = $("div[data-product-attribute=input-number]");
-// for(var i = 0; i<sizeOptions.length; i++){
-//   const product = new Object();
-//   product.size = $(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,'');
-//   product.colorCode = $("div[data-product-attribute=swatch]:first input:checked").attr('value');
-//   //console.log($(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,''));
-//   product.sizeQty = $(sizeOptions[i]).find('input').val();
-//   //console.log($(sizeOptions[i]).find('input').val());
-//   productArray.push(product);
-// }
-
-//console.log(sizeOptions.length);
-
-
 //check how many BulkContainer created
 var numBulkBox = $("div[data-product-option-change]").length;
-// console.log(numBulkBox);
 var sizesPerOption = sizeOptions.length/numBulkBox;
-// console.log(sizesPerOption);
-//console.log(productArray.length);
-//console.log(bulkNum);
+
 $(document).on('click','#placeOrder',function(){
 sizeOptions = $("div[data-product-attribute=input-number]");
 sizeCode = $("div[data-product-attribute=set-rectangle] input");
 numBulkBox = $("div[data-product-option-change]").length;
 sizesPerOption = sizeOptions.length/numBulkBox;
-  //console.log("increase button clicked");
-  //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
+
   for(var j = 0; j<numBulkBox;j++){
-    //for(var i = 0; i<sizeOptions.length; i++){
     for(var i = (j*sizesPerOption); i<(sizesPerOption*(j+1)); i++){
       const product = new Object();
       product.size = $(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,'');
       product.colorCode = $("div[data-product-attribute=swatch]:eq("+j+"):first input:checked").attr('value');
       product.sizeCode = $(sizeCode[i]).val();
-      //console.log($(sizeOptions[i]).first().text().replace(':','').replace(/\s+/g,''));
       product.sizeQty = $(sizeOptions[i]).find('input').val();
-      //console.log($(sizeOptions[i]).find('input').val());
       productArray.push(product);
     }
   }
-
 
   //console.log($("div[data-product-attribute=swatch]:eq("+1+"):first input:checked").attr('value'));
   console.log(productArray);
@@ -259,25 +207,9 @@ sizesPerOption = sizeOptions.length/numBulkBox;
         loop_Ajax(i++);
       },
     });
-
   }
-
 });
-//$(document).on('click','#bulkNum2:first label',function(){
-  //console.log("swatch clicked");
-  //$(this).prev().prop('checked',true)
-  //console.log($(this).prev().prop('checked'));
-  //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
-//  console.log($("#bulkNum1:first input:checked").attr('value'));
-//});
-//$(document).on('click','#bulkNum1:first label',function(){
-  //console.log("swatch clicked");
-  // console.log($('#bulkNum1 div[data-product-attribute=swatch]'));
-  // $(this).prev().prop('checked',true)
-  //console.log($(this).prev().prop('checked'));
-  //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
-//  console.log($("#bulkNum1:first input:checked").attr('value'));
-//});
+
 //end Custom Code for Bulk Ordering
 $(document).on('click','.form-option.form-option-swatch',function(){
      console.log("Swatch Clicked");
