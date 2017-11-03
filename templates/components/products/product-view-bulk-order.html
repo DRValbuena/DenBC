@@ -200,6 +200,21 @@
                         {{{dynamicComponent 'components/products/options'}}}
                     {{/each}}
                 </div>
+                {{#each product.custom_fields}}
+                  {{#if value '===' 'True'}}
+                    <div id="addBulkCont">
+                      <p id="addBulk" class="button bulk">Add New |+|</p>
+                    </div>
+                    <div id="bulkOrder">
+                      <p id="placeOrder" class="button bulk">Place Bulk Order</p>
+                    </div>
+                    {{#each product.options}}
+                    <p>
+                      {{values}}
+                    </p>
+                    {{/each}}
+                  {{/if}}
+                {{/each}}
                 {{#if product.event_date}}
                     {{> components/products/event-date}}
                 {{/if}}
