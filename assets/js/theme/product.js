@@ -76,7 +76,7 @@ export default class Product extends PageManager {
 
 //Begin Code for Bulk Ordering
 //Initialize data
-var bulkNum = 0; //counter to keep # of bulk container created
+var bulkNum = 0;
 var sizeSelect = $("div[data-product-attribute=set-rectangle]");
 const productArray = new Array(); //Array to Store Product size options available
 var sizeOptions = $("div[data-product-attribute=input-number]");
@@ -84,31 +84,13 @@ var sizeCode = $("div[data-product-attribute=set-rectangle] input");
 var sizeUrlParameter = $("div[data-product-attribute=set-rectangle] input").attr('name');
 var colorUrlParameter = $("div[data-product-attribute=swatch] input").attr('name');
 var productId = $("form input[name=product_id]").attr('value');
-//console.log(sizeOptions[1].outerHTML);
-
-
-//create a new option container when Add New is clicked
-$(document).on("click","#addBulk", function(){
-  $("#addBulkCont").before("<div><p id='removeBulk' class='button alert-box'>x</p><div id=BulkNum"+ (bulkNum + 1) +" data-product-option-change style>"+$("div[data-product-option-change]").html()+"</div></div>");
-  bulkNum++;
-  sizeOptions = $("div[data-product-attribute=input-number]");
-  //console.log(sizeOptions);
-});
-
-$(document).on("click","#removeBulk",function(){
-  $(this).parent().remove();
-});
-
 
 //grab color swatch DOM
-//console.log($(".form-field[data-product-attribute='swatch']").children());
 //Const input element values
 const inputClass = "form-radio";
 const inputType = "radio";
 //Create Color Object to store color availability
 var swatchList = $(".form-field[data-product-attribute='swatch']").children();
-//console.log("swatch length: " + swatchList.length);
-//console.log("swatch 2nd childID: " + swatchList[3].id + " " + swatchList[3].name + " " + swatchList[3].value + " " + swatchList[2].localName );
 const colorArray = new Array();
 for(var i = 1; i<swatchList.length; i++){
   var colorObj = new Object();
@@ -125,36 +107,79 @@ for(var i = 1; i<swatchList.length; i++){
     colorObj.span = $(swatchList[i]).html();
     colorObj.inputValue = swatchList[i].dataset.productAttributeValue;
     colorArray.push(colorObj);
-    //console.log(typeof colorObj.labelFor);
   }
 }
-//console.log(colorArray);
-var html ="";
-html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=BulkNum"+ (bulkNum + 1) +" data-product-option-change style>";
-html += "<div class='form-field' data-product-attribute='swatch'>";
-html += "<label class='form-label form-label--alternate form-label--inlineSmall'>Color:<span data-option-value=''></span><small>Required</small></label>"
-for(var i=0; i<colorArray.length; i++) {
-  if(colorArray[i].type === 'input'){
-    html += "<input class='form-radio' type='radio' name="+ colorArray[i].inputName+"test value="+colorArray[i].inputValue +" id="+colorArray[i].inputId +"test required='' data-state='false'>"
+var bulkNum = 1;
+// var html ="";
+// //html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=BulkNum"+ (bulkNum + 1) +" data-product-option-change style>";
+// html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=bulkNum data-product-option-change style>";
+// html += "<div class='form-field' data-product-attribute='swatch'>";
+// html += "<label class='form-label form-label--alternate form-label--inlineSmall'>Color:<span data-option-value=''></span><small>Required</small></label>"
+// console.log("colorArray Length: " + colorArray.length);
+// for(var i=0; i<colorArray.length; i++) {
+//   if(colorArray[i].type === 'input'){
+//     html += "<input class='form-radio' type='radio' name="+ colorArray[i].inputName+"test value="+colorArray[i].inputValue +" id="+colorArray[i].inputId +"test required='' data-state='false'>"
+//
+//   }
+//   else if(colorArray[i].type === 'label'){
+//     html += "<label class='form-option form-option-swatch' for="+colorArray[i].labelFor +"bulk data-product-attribute-value="+colorArray[i].inputValue +">";
+//     html += colorArray[i].span;
+//     html += "</label>";
+//   }
+// }
+// html += "</div>";
+// for(var i=0; i<sizeOptions.length; i++) {
+//   html += sizeOptions[i].outerHTML;
+// }
+// for(var i=0; i<sizeSelect.length; i++) {
+//   html += sizeSelect[i].outerHTML;
+// }
+//
+// html += "</div></div>";
+//console.log("before addfunction: "+bulkNum);
+function generateContainer(bulkNum){
+  var html ="";
+  //html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=BulkNum"+ (bulkNum + 1) +" data-product-option-change style>";
+  html += "<div><p id='removeBulk' class='button alert-box'>x</p><div id=bulkNum"+bulkNum+" data-product-option-change style>";
+  html += "<div class='form-field' data-product-attribute='swatch'>";
+  html += "<label class='form-label form-label--alternate form-label--inlineSmall'>Color:<span data-option-value=''></span><small>Required</small></label>"
+  console.log("colorArray Length: " + colorArray.length);
+  for(var i=0; i<colorArray.length; i++) {
+    if(colorArray[i].type === 'input'){
+      html += "<input class='form-radio' type='radio' name="+ colorArray[i].inputName+"_"+bulkNum+" value="+colorArray[i].inputValue +" id="+colorArray[i].inputId +"_"+bulkNum+" required='' data-state='false'>"
 
+    }
+    else if(colorArray[i].type === 'label'){
+      html += "<label class='form-option form-option-swatch' for="+colorArray[i].labelFor +"bulk"+bulkNum+" data-product-attribute-value="+colorArray[i].inputValue +">";
+      html += colorArray[i].span;
+      html += "</label>";
+    }
   }
-  else if(colorArray[i].type === 'label'){
-    html += "<label class='form-option form-option-swatch' for="+colorArray[i].labelFor +"bulk data-product-attribute-value="+colorArray[i].inputValue +">";
-    html += colorArray[i].span;
-    html += "</label>";
+  html += "</div>";
+  for(var i=0; i<sizeOptions.length; i++) {
+    html += sizeOptions[i].outerHTML;
   }
-}
-html += "</div>";
-for(var i=0; i<sizeOptions.length; i++) {
-  html += sizeOptions[i].outerHTML;
-}
-for(var i=0; i<sizeSelect.length; i++) {
-  html += sizeSelect[i].outerHTML;
-}
+  for(var i=0; i<sizeSelect.length; i++) {
+    html += sizeSelect[i].outerHTML;
+  }
 
-html += "</div></div>";
+  html += "</div></div>";
+  return html;
+}
+//create a new option container when Add New is clicked
+$(document).on("click","#addBulk", function(){
+  var genHthml = generateContainer(bulkNum);
+  $("#addBulkCont").before(genHthml);
+  bulkNum++;
+  //$("#bulkNum").attr("id","bulkNum"+bulkNum)
+  //console.log($("#bulkNum").attr("id","bulkNum"+bulkNum));
+  //console.log("after addfunction: "+bulkNum);
+});
+//remove bulk
+$(document).on("click","#removeBulk",function(){
+  $(this).parent().remove();
+});
 
-$("#addBulkCont").before(html);
 
 // sizeOptions = $("div[data-product-attribute=input-number]");
 // for(var i = 0; i<sizeOptions.length; i++){
@@ -166,19 +191,22 @@ $("#addBulkCont").before(html);
 //   //console.log($(sizeOptions[i]).find('input').val());
 //   productArray.push(product);
 // }
-sizeOptions = $("div[data-product-attribute=input-number]");
+
 //console.log(sizeOptions.length);
-sizeCode = $("div[data-product-attribute=set-rectangle] input");
+
 
 //check how many BulkContainer created
 var numBulkBox = $("div[data-product-option-change]").length;
-console.log(numBulkBox);
+// console.log(numBulkBox);
 var sizesPerOption = sizeOptions.length/numBulkBox;
-console.log(sizesPerOption);
+// console.log(sizesPerOption);
 //console.log(productArray.length);
 //console.log(bulkNum);
 $(document).on('click','#placeOrder',function(){
-
+sizeOptions = $("div[data-product-attribute=input-number]");
+sizeCode = $("div[data-product-attribute=set-rectangle] input");
+numBulkBox = $("div[data-product-option-change]").length;
+sizesPerOption = sizeOptions.length/numBulkBox;
   //console.log("increase button clicked");
   //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
   for(var j = 0; j<numBulkBox;j++){
@@ -235,11 +263,27 @@ $(document).on('click','#placeOrder',function(){
   }
 
 });
-$(document).on('click','#BulkNum1:first label',function(){
+//$(document).on('click','#bulkNum2:first label',function(){
   //console.log("swatch clicked");
-  $(this).prev().prop('checked',true)
+  //$(this).prev().prop('checked',true)
   //console.log($(this).prev().prop('checked'));
   //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
-  console.log($("#BulkNum1:first input:checked").attr('value'));
-});
+//  console.log($("#bulkNum1:first input:checked").attr('value'));
+//});
+//$(document).on('click','#bulkNum1:first label',function(){
+  //console.log("swatch clicked");
+  // console.log($('#bulkNum1 div[data-product-attribute=swatch]'));
+  // $(this).prev().prop('checked',true)
+  //console.log($(this).prev().prop('checked'));
+  //console.log($("div[data-product-attribute=swatch]:first input:checked").attr('value'));
+//  console.log($("#bulkNum1:first input:checked").attr('value'));
+//});
 //end Custom Code for Bulk Ordering
+$(document).on('click','.form-option.form-option-swatch',function(){
+     console.log("Swatch Clicked");
+     console.log($(this).prev());
+     $(this).prev().prop('checked',true);
+//   console.log($(this).parent().parent().attr('id'));
+//   var check = $(this).parent().parent().attr('id');
+//   //$(this).prev().prop('checked',true);
+});
