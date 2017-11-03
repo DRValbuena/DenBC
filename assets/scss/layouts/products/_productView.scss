@@ -71,3 +71,24 @@
         }
     }
 }
+
+.form-field[data-product-attribute='input-number']{
+  float: left;
+}
+.productView-options .form-input[type="number"] {
+    width: 38.66667%;
+    text-align: center;
+    padding: 1px 1px;
+    float: left;
+}
+.form-field[data-product-attribute='set-rectangle']{
+  display:inline-block;
+  width: 100%;
+}
+div[data-product-option-change]{
+    border: 1px solid #000;
+    padding: 1rem;
+}
+.button.alert-box{
+  float: right;
+}
