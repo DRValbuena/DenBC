@@ -1,0 +1,68 @@
+%%Panel.HTMLHead%%
+    <script type="text/javascript" src="%%GLOBAL_CdnAppPath%%/javascript/jquery/plugins/jCarousel/jCarousel.js?%%GLOBAL_JSCacheToken%%"></script>
+    <body>
+        %%Panel.DrawerMenu%%
+        <div class="page">
+            %%Panel.Header%%
+            <div class="main">
+                <div class="inner">
+                    %%Panel.WrapperBanner%%
+                        <div class="checkout-banner">
+                            <a href="%%GLOBAL_ShopPath%%">%%GLOBAL_ContinueShoppingOnStoreName%%</a>
+                        </div>
+                        <div class="Content ExpressCheckoutBlock" id="LayoutColumn2">
+                        <div class="Block">
+                            <h1 class="TitleHeading">%%LNG_ThanksForYourOrder%%%%GLOBAL_CustomerName%%</h1>
+                            <div class="BlockContent full-width">
+                                <p class="ErrorMessage" style="display:%%GLOBAL_HideError%%">
+                                    %%GLOBAL_ErrorMessage%%
+                                </p>
+
+                                <div style="display:%%GLOBAL_HidePaidOrderConfirmation%%">
+                                    <div class="NotifyMessage">
+                                        %%GLOBAL_KlarnaConfirmSnippet%%
+
+                                        <p><span>%%LNG_YourOrderNumber%%</span> <a href="%%GLOBAL_ShopPath%%/account.php?action=view_order&order_id=%%GLOBAL_OrderId%%">%%GLOBAL_OrderId%%</a></p>
+
+                                        <p style="display:%%GLOBAL_HidePhysicalOrderConfirmation%%">
+                                            %%GLOBAL_PhysicalOrderConfirmation%%
+                                        </p>
+
+                                        <p style="display:%%GLOBAL_HideDigitalOrderConfirmation%%">
+                                            %%GLOBAL_DigitalOrderConfirmation%%
+                                        </p>
+                                        <p style="display:%%GLOBAL_HideDigitalOrderDownloadLink%%">
+                                            <br>
+                                            <a href="%%GLOBAL_ViewFullOrderPath%%">%%LNG_DownloadTheItemsYouOrdered%%</a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div style="display: %%GLOBAL_HideAwaitingPayment%%">
+                                    <div class="NotifyMessage">
+                                        <p class="SuccessMessage" style="display:%%GLOBAL_HideSuccess%%">
+                                            %%LNG_JustSentAnEmailConfirmation%%
+                                        </p>
+                                        <p>
+                                            %%LNG_OrderAwaitingPayment%%
+                                        </p>
+                                    </div>
+                                </div>
+
+                                %%GLOBAL_OrderConfirmationDetails%%
+                                %%SNIPPET_OfflinePaymentMessage%%
+                            </div>
+                            %%Panel.ShareProductById%%
+                            %%Panel.SimilarMultiProductsByCustomerViews%%
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            %%Panel.Footer%%
+            <!-- Include the conversion tracking code for all analytics packages -->
+            %%GLOBAL_ConversionCode%%
+        </div>
+    </body>
+</html>
+​
